@@ -1,3 +1,5 @@
+import 'package:bloc_concepts_app/constants/enums.dart';
+import 'package:bloc_concepts_app/logic/cubit/internet_cubit.dart';
 import 'package:bloc_concepts_app/presentation/screens/second_screen.dart';
 
 import '/logic/cubit/counter_cubit.dart';
@@ -27,6 +29,37 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            BlocBuilder<InternetCubit, InternetState>(
+              builder: (context, state) {
+                if (state is InternetConnected &&
+                    state.connectionType == ConnectionType.Wifi) {
+                  return Text(
+                    'Wi-fi',
+                    style: Theme.of(context).textTheme.headline3?.copyWith(
+                          color: Colors.green,
+                        ),
+                  );
+                } else if (state is InternetConnected &&
+                    state.connectionType == ConnectionType.Wifi) {
+                  return Text(
+                    'Mobile',
+                    style: Theme.of(context).textTheme.headline3?.copyWith(
+                          color: Colors.green,
+                        ),
+                  );
+                } else if (state is InternetConnected &&
+                    state.connectionType == ConnectionType.Wifi) {
+                  return Text(
+                    'Disconnected',
+                    style: Theme.of(context).textTheme.headline3?.copyWith(
+                          color: Colors.red,
+                        ),
+                  );
+                }
+                return CircularProgressIndicator();
+              },
+            ),
+
             Text(
               'You have pushed the button this many times:',
             ),
