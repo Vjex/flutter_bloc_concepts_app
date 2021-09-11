@@ -1,21 +1,19 @@
-import 'package:bloc_concepts_app/presentation/screens/second_screen.dart';
-
 import '/logic/cubit/counter_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HomeScreen extends StatefulWidget {
+class ThirdScreen extends StatefulWidget {
   final String title;
   final Color color;
 
-  HomeScreen({Key? key, required this.title, required this.color})
+  ThirdScreen({Key? key, required this.title, required this.color})
       : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _ThirdScreenState createState() => _ThirdScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _ThirdScreenState extends State<ThirdScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 FloatingActionButton(
-                  heroTag: 'h1',
+                  heroTag: 'S1',
                   onPressed: () {
                     //Now Calling Decrement Function Written in Cut
                     //But First We need to Access Or Cubit .
@@ -98,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Icon(Icons.remove),
                 ),
                 FloatingActionButton(
-                  heroTag: 'h2',
+                  heroTag: 'S2',
                   onPressed: () {
                     //Now Calling Decrement Function Written in Cut
                     //But First We need to Access Or Cubit .
@@ -110,32 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Icon(Icons.add),
                 ),
               ],
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            MaterialButton(
-              color: Colors.redAccent,
-              onPressed: () {
-                //
-                Navigator.of(context).pushNamed('/second');
-              },
-              child: Text(
-                'Go to Second Screen',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            MaterialButton(
-              color: Colors.greenAccent,
-              onPressed: () {
-                //
-                Navigator.of(context).pushNamed('/third');
-              },
-              child: Text(
-                'Go to Third Screen',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
+            )
           ],
         ),
       ),

@@ -1,14 +1,26 @@
-import '/presentation/screens/home_screen.dart';
-import '/logic/cubit/counter_cubit.dart';
+import 'package:bloc_concepts_app/presentation/router/app_router.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  AppRouter _appRoute = AppRouter();
+
+  @override
+  void dispose() {
+    //Closse The All Cubits/bloc
+    _appRoute.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,13 +28,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: BlocProvider<CounterCubit>(
-        create: (context) => CounterCubit(),
-        child: HomeScreen(
-          title: 'Flutter Demo Home Page',
-          color: Colors.blue,
-        ),
-      ),
+      onGenerateRoute: _appRoute.onGenertaRoute,
     );
   }
 }
