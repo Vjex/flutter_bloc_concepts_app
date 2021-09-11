@@ -6,7 +6,9 @@ part of 'countercubit_cubit.dart';
 // class CountercubitInitial extends CountercubitState {}
 class CounterState {
   int counterValue;
+  bool? wasInceremented;
   CounterState({
     required this.counterValue,
+    this.wasInceremented,
   });
 }
