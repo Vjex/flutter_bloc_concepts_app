@@ -33,116 +33,100 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: BlocListener<CounterCubit, CounterState>(
-        listener: (context, state) {
-          if (state.wasInceremented == true) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  'Incremented',
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'You have pushed the button this many times:',
+            ),
+            //Bloc Builder for Rebuilting this child text widgeton depending upon current state value
+            BlocConsumer<CounterCubit, CounterState>(
+              listener: (context, state) {
+                if (state.wasInceremented == true) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        'Incremented',
+                      ),
+                      duration: Duration(
+                        seconds: 1,
+                      ),
+                    ),
+                  );
+                } else if (state.wasInceremented == false) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Decremented'),
+                      duration: Duration(
+                        seconds: 1,
+                      ),
+                    ),
+                  );
+                }
+              },
+              builder: (context, state) {
+                if (state.counterValue < 0) {
+                  return Text(
+                    'Negative :' + state.counterValue.toString(),
+                    style: Theme.of(context).textTheme.headline4,
+                  );
+                } else if (state.counterValue % 2 == 0) {
+                  return Text(
+                    'Even No :' + state.counterValue.toString(),
+                    style: Theme.of(context).textTheme.headline4,
+                  );
+                } else if (state.counterValue == 5) {
+                  return Text(
+                    'no is 5 :' + state.counterValue.toString(),
+                    style: Theme.of(context).textTheme.headline4,
+                  );
+                } else {
+                  return Text(
+                    'No : :' + state.counterValue.toString(),
+                    style: Theme.of(context).textTheme.headline4,
+                  );
+                }
+              },
+            ),
+            SizedBox(
+              height: 24,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                FloatingActionButton(
+                  onPressed: () {
+                    //Now Calling Decrement Function Written in Cut
+                    //But First We need to Access Or Cubit .
+                    //For This We have two Ways below one is Commented//
+                    BlocProvider.of<CounterCubit>(context).decrement();
+                    // context.bloc<CounterCubit>().decrement();
+                  },
+                  tooltip: 'Decrement',
+                  child: Icon(Icons.remove),
                 ),
-                duration: Duration(
-                  seconds: 1,
+                FloatingActionButton(
+                  onPressed: () {
+                    //Now Calling Decrement Function Written in Cut
+                    //But First We need to Access Or Cubit .
+                    //For This We have two Ways below one is Commented//
+                    BlocProvider.of<CounterCubit>(context).increment();
+                    // context.bloc<CounterCubit>().increment();
+                  },
+                  tooltip: 'Increment',
+                  child: Icon(Icons.add),
                 ),
-              ),
-            );
-          } else if (state.wasInceremented == false) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('Decremented'),
-                duration: Duration(
-                  seconds: 1,
-                ),
-              ),
-            );
-          }
-        },
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'You have pushed the button this many times:',
-              ),
-
-              //Bloc Builder for Rebuilting this child text widgeton depending upon current state value
-              BlocBuilder<CounterCubit, CounterState>(
-                builder: (context, state) {
-                  if (state.counterValue < 0) {
-                    return Text(
-                      'Negative :' + state.counterValue.toString(),
-                      style: Theme.of(context).textTheme.headline4,
-                    );
-                  } else if (state.counterValue % 2 == 0) {
-                    return Text(
-                      'Even No :' + state.counterValue.toString(),
-                      style: Theme.of(context).textTheme.headline4,
-                    );
-                  } else if (state.counterValue == 5) {
-                    return Text(
-                      'no is 5 :' + state.counterValue.toString(),
-                      style: Theme.of(context).textTheme.headline4,
-                    );
-                  } else {
-                    return Text(
-                      'No : :' + state.counterValue.toString(),
-                      style: Theme.of(context).textTheme.headline4,
-                    );
-                  }
-                },
-              ),
-              SizedBox(
-                height: 24,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  FloatingActionButton(
-                    onPressed: () {
-                      //Now Calling Decrement Function Written in Cut
-                      //But First We need to Access Or Cubit .
-                      //For This We have two Ways below one is Commented//
-                      BlocProvider.of<CounterCubit>(context).decrement();
-                      // context.bloc<CounterCubit>().decrement();
-                    },
-                    tooltip: 'Decrement',
-                    child: Icon(Icons.remove),
-                  ),
-                  FloatingActionButton(
-                    onPressed: () {
-                      //Now Calling Decrement Function Written in Cut
-                      //But First We need to Access Or Cubit .
-                      //For This We have two Ways below one is Commented//
-                      BlocProvider.of<CounterCubit>(context).increment();
-                      // context.bloc<CounterCubit>().increment();
-                    },
-                    tooltip: 'Increment',
-                    child: Icon(Icons.add),
-                  ),
-                ],
-              )
-            ],
-          ),
+              ],
+            )
+          ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
       ),
     );
   }
