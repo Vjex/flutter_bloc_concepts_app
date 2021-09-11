@@ -1,4 +1,4 @@
-import 'package:bloc_concepts_app/cubit/counter_cubit.dart';
+import 'package:bloc_concepts_app/logic/cubit/counter_cubit.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:test/test.dart';
 
