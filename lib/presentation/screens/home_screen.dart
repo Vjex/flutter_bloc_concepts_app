@@ -20,6 +20,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    //Using Bloc Listner
     return BlocListener<InternetCubit, InternetState>(
       listener: (context, state) {
         if (state is InternetConnected &&
@@ -41,35 +42,77 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              // BlocBuilder<InternetCubit, InternetState>(
-              //   builder: (context, state) {
-              //     if (state is InternetConnected &&
-              //         state.connectionType == ConnectionType.Wifi) {
-              //       return Text(
-              //         'Wi-fi',
-              //         style: Theme.of(context).textTheme.headline3?.copyWith(
-              //               color: Colors.green,
-              //             ),
-              //       );
-              //     } else if (state is InternetConnected &&
-              //         state.connectionType == ConnectionType.Mobile) {
-              //       return Text(
-              //         'Mobile',
-              //         style: Theme.of(context).textTheme.headline3?.copyWith(
-              //               color: Colors.green,
-              //             ),
-              //       );
-              //     } else if (state is InternetDisconnected) {
-              //       return Text(
-              //         'Disconnected',
-              //         style: Theme.of(context).textTheme.headline3?.copyWith(
-              //               color: Colors.red,
-              //             ),
-              //       );
-              //     }
-              //     return CircularProgressIndicator();
-              //   },
-              // ),
+              BlocBuilder<InternetCubit, InternetState>(
+                builder: (context, state) {
+                  if (state is InternetConnected &&
+                      state.connectionType == ConnectionType.Wifi) {
+                    return Text(
+                      'Wi-fi',
+                      style: Theme.of(context).textTheme.headline3?.copyWith(
+                            color: Colors.green,
+                          ),
+                    );
+                  } else if (state is InternetConnected &&
+                      state.connectionType == ConnectionType.Mobile) {
+                    return Text(
+                      'Mobile',
+                      style: Theme.of(context).textTheme.headline3?.copyWith(
+                            color: Colors.green,
+                          ),
+                    );
+                  } else if (state is InternetDisconnected) {
+                    return Text(
+                      'Disconnected',
+                      style: Theme.of(context).textTheme.headline3?.copyWith(
+                            color: Colors.red,
+                          ),
+                    );
+                  }
+                  return CircularProgressIndicator();
+                },
+              ),
+
+              //Showing the Use Of context.watch of fluter bloc library after 6.1.0.
+              //Showing Use of Context.watch by reading two diffrent cubits and building the Whole builder widget whenevre any one cubit state changes
+              Text(
+                'Showing Use of Context.watch:',
+              ),
+
+              Builder(builder: (context) {
+                final counterState = context.watch<CounterCubit>().state;
+                final inetrnetState = context.watch<InternetCubit>().state;
+                if (inetrnetState is InternetConnected &&
+                    inetrnetState.connectionType == ConnectionType.Wifi) {
+                  return Text(
+                    "Counter : " +
+                        counterState.counterValue.toString() +
+                        ' Internet : Wi-fi',
+                    style: Theme.of(context).textTheme.headline5?.copyWith(
+                          color: Colors.green,
+                        ),
+                  );
+                } else if (inetrnetState is InternetConnected &&
+                    inetrnetState.connectionType == ConnectionType.Mobile) {
+                  return Text(
+                    "Counter : " +
+                        counterState.counterValue.toString() +
+                        ' Internet : Mobile',
+                    style: Theme.of(context).textTheme.headline5?.copyWith(
+                          color: Colors.green,
+                        ),
+                  );
+                } else if (inetrnetState is InternetDisconnected) {
+                  return Text(
+                    "Counter : " +
+                        counterState.counterValue.toString() +
+                        ' Internet : Disconnected',
+                    style: Theme.of(context).textTheme.headline5?.copyWith(
+                          color: Colors.red,
+                        ),
+                  );
+                }
+                return CircularProgressIndicator();
+              }),
 
               Text(
                 'You have pushed the button this many times:',
