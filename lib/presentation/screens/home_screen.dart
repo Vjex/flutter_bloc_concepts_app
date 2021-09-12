@@ -114,6 +114,33 @@ class _HomeScreenState extends State<HomeScreen> {
                 return CircularProgressIndicator();
               }),
 
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Showing Use of Context.select:',
+              ),
+              //Use of Context.watch of flutter bloc
+              //this can be used to compare the previous state value to new state value instaed of builWhen parametr of blocbiuilder but
+              //the this can be used only when you want to compare only a single value of any state not for multiple..
+              //for multiple value comaprision from previous stae to new state we still need to use blocbuilder property buildWhen.
+              //counter.select rebuilds automatically whenever the previous state value diffres from the newstate value .
+              Builder(builder: (context) {
+                final counterValue = context.select(
+                    (CounterCubit counter) => counter.state.counterValue);
+
+                return Text(
+                  'Counter :' + counterValue.toString(),
+                  style: Theme.of(context).textTheme.headline6?.copyWith(
+                        color: Colors.green,
+                      ),
+                );
+              }),
+
+              SizedBox(
+                height: 10,
+              ),
+
               Text(
                 'You have pushed the button this many times:',
               ),
@@ -179,7 +206,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       //But First We need to Access Or Cubit .
                       //For This We have two Ways below one is Commented//
                       BlocProvider.of<CounterCubit>(context).decrement();
-                      // context.bloc<CounterCubit>().decrement();
+                      // context.read<CounterCubit>().decrement();
                     },
                     tooltip: 'Decrement',
                     child: Icon(Icons.remove),
@@ -191,7 +218,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       //But First We need to Access Or Cubit .
                       //For This We have two Ways below one is Commented//
                       BlocProvider.of<CounterCubit>(context).increment();
-                      // context.bloc<CounterCubit>().increment();
+                      // context.read<CounterCubit>().increment();
                     },
                     tooltip: 'Increment',
                     child: Icon(Icons.add),
