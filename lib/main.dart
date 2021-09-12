@@ -1,5 +1,6 @@
 import 'package:bloc_concepts_app/logic/cubit/counter_cubit.dart';
 import 'package:bloc_concepts_app/logic/cubit/internet_cubit.dart';
+import 'package:bloc_concepts_app/logic/cubit/settings_cubit.dart';
 import 'package:bloc_concepts_app/logic/utility/app_bloc_observer.dart';
 import 'package:bloc_concepts_app/presentation/router/app_router.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -55,6 +56,10 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<CounterCubit>(
           create: (context) => CounterCubit(),
+        ),
+        BlocProvider<SettingsCubit>(
+          create: (counterCubitContext) => SettingsCubit(),
+          lazy: false,
         ),
       ],
       child: MaterialApp(

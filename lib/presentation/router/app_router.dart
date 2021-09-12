@@ -1,6 +1,7 @@
 import 'package:bloc_concepts_app/logic/cubit/counter_cubit.dart';
 import 'package:bloc_concepts_app/presentation/screens/home_screen.dart';
 import 'package:bloc_concepts_app/presentation/screens/second_screen.dart';
+import 'package:bloc_concepts_app/presentation/screens/settings_screen.dart';
 import 'package:bloc_concepts_app/presentation/screens/third_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,11 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) =>
               ThirdScreen(title: 'Third Screen', color: Colors.greenAccent),
+        );
+
+      case '/settings':
+        return MaterialPageRoute(
+          builder: (_) => SettingsScreen(),
         );
 
       default:
